@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="A printable worksheet for turning one rehearsal, session, song, or performance into a focused week of content."
+    >
+    <title>One Session, One Week Content Planner | Track &amp; Traction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@600;700;800&amp;family=Literata:opsz,wght@7..72,400..700&amp;display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="planner-page">
+    <a class="skip-link" href="#planner-main">Skip to the planner</a>
+    <header class="planner-header">
+      <a class="wordmark" href="index.html" aria-label="Return to Track and Traction">
+        <span class="wordmark__beat" aria-hidden="true"></span>
+        Track <span>&amp;</span> Traction
+      </a>
+      <div class="planner-header__actions">
+        <a class="text-link" href="index.html">Back to the guide</a>
+        <button class="button print-button" type="button" onclick="window.print()">Print or save as PDF</button>
+      </div>
+    </header>
+
+    <main class="planner-main" id="planner-main">
+      <header class="planner-title">
+        <p>Free working sheet · 2026</p>
+        <h1>One Session,<br>One Week Content Planner</h1>
+        <p>
+          Start with something you actually made. Keep one story connected
+          across the week. Leave the boxes that you do not need blank.
+        </p>
+      </header>
+
+      <form class="planner-form">
+        <section class="planner-source" aria-labelledby="source-title">
+          <h2 id="source-title">Choose the source material</h2>
+          <div class="planner-fields">
+            <label>
+              Source material
+              <textarea rows="3" placeholder="One rehearsal, recording session, song, or performance"></textarea>
+            </label>
+            <label>
+              The change or story
+              <textarea rows="3" placeholder="What problem, decision, or turning point is worth sharing?"></textarea>
+            </label>
+            <label>
+              Audience action
+              <textarea rows="3" placeholder="After seeing this week, what should the right person do?"></textarea>
+            </label>
+          </div>
+        </section>
+
+        <section class="planner-week" aria-labelledby="week-title">
+          <div class="planner-section-heading">
+            <h2 id="week-title">Shape the week</h2>
+            <p>Three strong posts can be enough. Use the other days to listen, reply, or review.</p>
+          </div>
+
+          <div class="planner-days">
+            <fieldset class="planner-day" data-planner-day="monday">
+              <legend>Monday · Listen</legend>
+              <label>Purpose <input type="text" placeholder="Find the strongest change"></label>
+              <label>Format <input type="text" placeholder="Private review, notes, clip selection"></label>
+              <label>Next action <input type="text" placeholder="Choose the week's central moment"></label>
+            </fieldset>
+
+            <fieldset class="planner-day" data-planner-day="tuesday">
+              <legend>Tuesday · Hook</legend>
+              <label>Purpose <input type="text" placeholder="Earn attention with the result"></label>
+              <label>Format <input type="text" placeholder="Short video, image, opening line"></label>
+              <label>Next action <input type="text" placeholder="Invite people to notice one detail"></label>
+            </fieldset>
+
+            <fieldset class="planner-day" data-planner-day="wednesday">
+              <legend>Wednesday · Explain</legend>
+              <label>Purpose <input type="text" placeholder="Add context to the musical decision"></label>
+              <label>Format <input type="text" placeholder="Carousel, blog section, voiceover"></label>
+              <label>Next action <input type="text" placeholder="Ask a focused question"></label>
+            </fieldset>
+
+            <fieldset class="planner-day" data-planner-day="thursday">
+              <legend>Thursday · Talk</legend>
+              <label>Purpose <input type="text" placeholder="Turn the post into a conversation"></label>
+              <label>Format <input type="text" placeholder="Replies, follow-up detail, community post"></label>
+              <label>Next action <input type="text" placeholder="Record useful audience language"></label>
+            </fieldset>
+
+            <fieldset class="planner-day" data-planner-day="friday">
+              <legend>Friday · Perform</legend>
+              <label>Purpose <input type="text" placeholder="Show the idea working in the music"></label>
+              <label>Format <input type="text" placeholder="Performance or rehearsal excerpt"></label>
+              <label>Next action <input type="text" placeholder="Link to the full version or guide"></label>
+            </fieldset>
+
+            <fieldset class="planner-day" data-planner-day="saturday">
+              <legend>Saturday · Connect</legend>
+              <label>Purpose <input type="text" placeholder="Participate where the story is useful"></label>
+              <label>Format <input type="text" placeholder="Class, ensemble, group, or network"></label>
+              <label>Next action <input type="text" placeholder="Contribute before sharing a link"></label>
+            </fieldset>
+
+            <fieldset class="planner-day" data-planner-day="sunday">
+              <legend>Sunday · Review</legend>
+              <label>Purpose <input type="text" placeholder="Make the next week easier"></label>
+              <label>Format <input type="text" placeholder="Ten-minute performance review"></label>
+              <label>Next action <input type="text" placeholder="Repeat one thing; change one thing"></label>
+            </fieldset>
+          </div>
+        </section>
+
+        <section class="planner-review" aria-labelledby="review-title">
+          <h2 id="review-title">Weekly review</h2>
+          <div class="planner-fields planner-fields--review">
+            <label>
+              What earned attention?
+              <textarea rows="4"></textarea>
+            </label>
+            <label>
+              What created a useful response?
+              <textarea rows="4"></textarea>
+            </label>
+            <label>
+              What will I change next week?
+              <textarea rows="4"></textarea>
+            </label>
+          </div>
+        </section>
+      </form>
+
+      <p class="planner-note">
+        Track only the numbers that help you make a decision. Small early samples are directional, not proof.
+      </p>
+    </main>
+  </body>
+</html>
