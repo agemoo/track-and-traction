@@ -92,13 +92,39 @@ test("summarizes the four-step weekly method", () => {
 test("shows three safe social destinations", () => {
   const social = html.match(/<section\b[^>]*class="social-links"[^>]*>([\s\S]*?)<\/section>/i)?.[1] ?? "";
   for (const platform of ["Instagram", "YouTube", "LinkedIn"]) assert.match(social, new RegExp(platform, "i"));
-  assert.equal((social.match(/aria-disabled="true"/gi) || []).length, 3);
+  assert.equal((social.match(/\bdisabled\b/gi) || []).length, 3);
   assert.doesNotMatch(social, /href="https?:\/\//i);
 });
 
 test("keeps public copy free of long dash characters", () => {
   assert.doesNotMatch(textContent(html), /[\u2013\u2014]/u);
   assert.doesNotMatch(textContent(planner), /[\u2013\u2014]/u);
+  assert.doesNotMatch(html + planner, /&(?:mdash|ndash);|&#(?:8211|8212|x2013|x2014);/i);
+});
+
+test("contains valid closing spans and no mojibake in public assets", () => {
+  const script = readFileSync(join(root, "script.js"), "utf8");
+  for (const source of [html, planner, script]) assert.doesNotMatch(source, /鈫|鈥|銆|锟|�|︹|€|\?\/span>/u);
+  assert.equal((html.match(/<span\b/gi) || []).length, (html.match(/<\/span>/gi) || []).length);
+});
+
+test("uses disabled buttons for unlinked social platforms", () => {
+  const social = html.match(/<section\b[^>]*class="social-links"[^>]*>([\s\S]*?)<\/section>/i)?.[1] ?? "";
+  assert.equal((social.match(/<button\b[^>]*disabled[^>]*>/gi) || []).length, 3);
+  assert.doesNotMatch(social, /<a\b/i);
+});
+
+test("keeps all seven day plans readable without JavaScript", () => {
+  assert.match(html, /<section\b[^>]*class="no-js-week"[^>]*aria-label="Complete seven day content plan"/i);
+  assert.equal((html.match(/<article\b[^>]*data-fallback-day=/gi) || []).length, 7);
+  for (const day of ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]) assert.match(html, new RegExp(`data-fallback-day="${day.toLowerCase()}"[\\s\\S]*?<h3>${day}:`, "i"));
+  assert.match(css, /\.js\s+\.no-js-week\s*\{\s*display:\s*none/i);
+});
+
+test("keeps the final mobile cascade compact", () => {
+  assert.doesNotMatch(css, /min-height:\s*44rem/i);
+  assert.match(css, /@media\s*\(max-width:\s*40rem\)[\s\S]*\.site-header\s*\{[^}]*flex-direction:\s*row/i);
+  assert.match(css, /@media\s*\(max-width:\s*40rem\)[\s\S]*\.hero\s*\{[^}]*min-height:\s*auto/i);
 });
 
 test("uses progressive enhancement hooks without hiding server-rendered content", () => {
