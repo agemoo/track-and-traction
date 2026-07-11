@@ -1,0 +1,9 @@
+{
+  "name": "track-and-traction",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A pillar landing page for the Track & Traction academic growth marketing project.",
+  "scripts": {
+    "test": "node --test"
+  }
+}
