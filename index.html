@@ -7,7 +7,7 @@
       name="description"
       content="A practical 2026 guide for turning one rehearsal, recording session, or performance into a focused week of content."
     >
-    <meta name="theme-color" content="oklch(0.45 0.086 230)">
+    <meta name="theme-color" content="#14243a">
     <title>One Session. One Week of Content. | Track &amp; Traction</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,40 +26,51 @@
         <span class="wordmark__beat" aria-hidden="true"></span>
         Track <span>&amp;</span> Traction
       </a>
-      <nav class="site-nav" aria-label="Primary navigation">
-        <a href="#method">The Method</a>
-        <a href="#content-track">The Week</a>
-        <a class="button button--small" href="planner.html">Open the Planner</a>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="primary-navigation"><span>Menu</span></button>
+      <nav class="site-nav" id="primary-navigation" data-nav-links aria-label="Primary navigation">
+        <a href="#weekly-method">The method</a>
+        <a href="#content-ideas">Content ideas</a>
+        <a href="#about">About</a>
+        <a class="button button--small" href="planner.html">Open the free planner</a>
       </nav>
     </header>
 
     <main id="main-content">
       <article id="top">
         <header class="hero">
-          <img
-            class="hero__image"
-            src="assets/images/track-traction-hero.png"
-            alt="A musician reviews a multitrack session and writes content ideas beside a keyboard."
-            width="1536"
-            height="1024"
-          >
-          <div class="hero__shade" aria-hidden="true"></div>
-          <div class="hero__copy">
-            <p class="hero__kicker">A practical content system for independent musicians</p>
-            <h1>One session.<br>One week of content.</h1>
-            <p class="hero__deck">
-              Stop inventing seven disconnected posts. Start with the music
-              you already made, then build a week that sounds like you.
-            </p>
-            <div class="hero__actions">
-              <a class="button button--light" href="#method">See the method</a>
-              <a class="text-link text-link--light" href="planner.html">Use the free planner <span aria-hidden="true">↗</span></a>
-            </div>
+          <div class="hero__copy" data-reveal>
+            <p class="hero__kicker">Field notes for independent musicians</p>
+            <h1>Make music.<br>Plan the week.</h1>
+            <p class="hero__deck">A rehearsal, Cubase session, or show usually leaves useful material behind. This page helps you decide what to post before those files disappear into your camera roll.</p>
+            <a class="button button--primary" href="planner.html">Build my content week <span aria-hidden="true">&nearr;</span></a>
           </div>
+          <figure class="hero__media" data-reveal>
+            <img class="hero__image" src="assets/images/track-traction-hero.png" alt="A musician reviews a multitrack session and writes content ideas beside a keyboard." width="1536" height="1024">
+            <svg class="waveform" viewBox="0 0 720 120" role="img" aria-label="Audio waveform"><path class="waveform__path" pathLength="1" d="M0 60 H50 L65 40 L80 82 L95 22 L112 96 L130 48 L146 68 L166 60 H215 L232 34 L250 88 L267 16 L286 104 L306 42 L325 76 L344 60 H400 L418 30 L437 91 L455 18 L474 101 L493 45 L512 72 L531 60 H585 L603 38 L620 84 L638 26 L655 94 L673 50 L690 66 L720 60" fill="none" vector-effect="non-scaling-stroke" /></svg>
+          </figure>
         </header>
 
+        <section class="category-section" id="content-ideas" aria-labelledby="category-title">
+          <div class="section-heading" data-reveal><p class="section-tag">Choose a starting point</p><h2 id="category-title">What happened in the room?</h2></div>
+          <div class="category-grid">
+            <a class="category-card" href="#music-making" data-reveal><span class="category-card__label">Session notes</span><strong>Music making</strong><span>Composition, arranging, Cubase sessions, and instrument parts.</span><span class="category-card__arrow" aria-hidden="true">&nearr;</span></a>
+            <a class="category-card" href="#rehearsal-performance" data-reveal><span class="category-card__label">Stage notes</span><strong>Rehearsal and performance</strong><span>Practice clips, live footage, mistakes, and what changed before the show.</span><span class="category-card__arrow" aria-hidden="true">&nearr;</span></a>
+            <a class="category-card" href="#artist-promotion" data-reveal><span class="category-card__label">Traction notes</span><strong>Artist promotion</strong><span>Simple content plans, platform choices, and results worth checking next week.</span><span class="category-card__arrow" aria-hidden="true">&nearr;</span></a>
+          </div>
+        </section>
+
+        <section class="weekly-method" id="weekly-method" aria-labelledby="weekly-method-title">
+          <div class="section-heading" data-reveal><p class="section-tag">One useful week</p><h2 id="weekly-method-title">A simple rhythm for the files you already have.</h2></div>
+          <ol class="method-list">
+            <li data-reveal><span>01</span><strong>Capture</strong><p>Save the clip, photo, and decision while the session is still fresh.</p></li>
+            <li data-reveal><span>02</span><strong>Choose</strong><p>Find the one change or question that can hold the week together.</p></li>
+            <li data-reveal><span>03</span><strong>Schedule</strong><p>Give each post one job and place it on a realistic day.</p></li>
+            <li data-reveal><span>04</span><strong>Review</strong><p>Check useful replies, watch time, saves, and clicks before planning again.</p></li>
+          </ol>
+        </section>
+
         <div class="article-shell">
-          <section class="opening" aria-labelledby="opening-title">
+          <section class="opening" id="about" aria-labelledby="opening-title">
             <div class="opening__lead">
               <h2 id="opening-title">The problem is not a lack of material.</h2>
             </div>
@@ -98,7 +109,7 @@
             <span>Consistency becomes easier when every post belongs to the same week.</span>
           </aside>
 
-          <section class="pillar" id="method" aria-labelledby="making-title">
+          <section class="pillar" id="music-making" aria-labelledby="making-title">
             <div class="pillar__content">
               <p class="section-tag">Start with the source</p>
               <h2 id="making-title">Music making gives you the raw material.</h2>
@@ -112,8 +123,8 @@
                   sounded full but had no contrast.
                 </p>
                 <p>
-                  These are stronger starting points than “I need an Instagram
-                  post.” They contain a problem, a decision, and a result. From
+                  These are stronger starting points than "I need an Instagram
+                  post." They contain a problem, a decision, and a result. From
                   one arranging session, you might share a short before-and-
                   after clip, a screenshot of the session structure, and a
                   paragraph about why you removed an instrument. The same idea
@@ -139,7 +150,7 @@
             </figure>
           </section>
 
-          <section class="pillar pillar--reverse" aria-labelledby="performance-title">
+          <section class="pillar pillar--reverse" id="rehearsal-performance" aria-labelledby="performance-title">
             <div class="pillar__content">
               <p class="section-tag">Show the process</p>
               <h2 id="performance-title">Rehearsal turns technique into a story.</h2>
@@ -157,8 +168,8 @@
                   phone where it will not interrupt the rehearsal and capture a
                   few short sections. Ask permission from everyone who appears.
                   Afterward, label the clips while the details are still fresh.
-                  A useful folder name such as “bridge timing—take 2 and take
-                  5” is much easier to revisit than twenty files called
+                  A useful folder name such as "bridge timing, take 2 and take
+                  5" is much easier to revisit than twenty files called
                   IMG_4821.
                 </p>
                 <p>
@@ -188,7 +199,7 @@
             </figure>
           </section>
 
-          <section class="pillar" aria-labelledby="promotion-title">
+          <section class="pillar" id="artist-promotion" aria-labelledby="promotion-title">
             <div class="pillar__content">
               <p class="section-tag">Give every post a job</p>
               <h2 id="promotion-title">Promotion should connect the pieces.</h2>
@@ -221,8 +232,8 @@
               </div>
               <div class="takeaway">
                 <strong>Before publishing:</strong>
-                finish the sentence “After seeing this, I want the right person
-                to…” If the answer is unclear, the post is not ready.
+                finish the sentence "After seeing this, I want the right person
+                to..." If the answer is unclear, the post is not ready.
               </div>
             </div>
             <figure class="pillar__media">
@@ -296,6 +307,15 @@
               </div>
             </dl>
           </div>
+          <section class="no-js-week" aria-label="Complete seven day content plan">
+            <article data-fallback-day="monday"><h3>Monday: Listen</h3><p>Review the session and mark three clips. Choose the change that can carry the week.</p></article>
+            <article data-fallback-day="tuesday"><h3>Tuesday: Hook</h3><p>Share a 10 to 20 second vertical clip. Put the result first and name one detail to hear.</p></article>
+            <article data-fallback-day="wednesday"><h3>Wednesday: Explain</h3><p>Compare the early and later take. Ask which choice feels clearer and why.</p></article>
+            <article data-fallback-day="thursday"><h3>Thursday: Talk</h3><p>Reply to useful comments and ask another musician how they handle the same problem.</p></article>
+            <article data-fallback-day="friday"><h3>Friday: Perform</h3><p>Show the idea working in rehearsal or performance, then link to the full version.</p></article>
+            <article data-fallback-day="saturday"><h3>Saturday: Connect</h3><p>Share the lesson with one relevant ensemble, class, or professional community.</p></article>
+            <article data-fallback-day="sunday"><h3>Sunday: Review</h3><p>Check watch time, useful responses, saves, clicks, and effort. Write one change for next week.</p></article>
+          </section>
         </section>
 
         <div class="article-shell">
@@ -352,7 +372,16 @@
               source, name the story, assign each post a job, and review what
               happened. It is free, printable, and deliberately simple.
             </p>
-            <a class="button button--light" href="planner.html">Open the free planner <span aria-hidden="true">↗</span></a>
+            <a class="button button--light" href="planner.html">Open the free planner <span aria-hidden="true">&nearr;</span></a>
+          </div>
+        </section>
+
+        <section class="social-links" aria-labelledby="social-title">
+          <div><p class="section-tag">Follow the work</p><h2 id="social-title">More notes from the next session.</h2></div>
+          <div class="social-links__list">
+            <button class="social-link" type="button" disabled>Instagram <span>Rehearsal clips and session details</span></button>
+            <button class="social-link" type="button" disabled>YouTube <span>Shorts and longer process videos</span></button>
+            <button class="social-link" type="button" disabled>LinkedIn <span>Weekly tests, mistakes, and results</span></button>
           </div>
         </section>
       </article>

@@ -1,3 +1,37 @@
+document.documentElement.classList.add("js");
+
+const menuToggle = document.querySelector("[data-menu-toggle]");
+const navigation = document.querySelector("[data-nav-links]");
+
+if (menuToggle && navigation) {
+  menuToggle.addEventListener("click", () => {
+    const open = !navigation.classList.contains("is-open");
+    navigation.classList.toggle("is-open", open);
+    menuToggle.setAttribute("aria-expanded", String(open));
+  });
+  navigation.addEventListener("click", (event) => {
+    if (!(event.target instanceof HTMLAnchorElement)) return;
+    navigation.classList.remove("is-open");
+    menuToggle.setAttribute("aria-expanded", "false");
+  });
+}
+
+const revealItems = [...document.querySelectorAll("[data-reveal]")];
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (reducedMotion || !("IntersectionObserver" in window)) {
+  for (const item of revealItems) item.classList.add("is-visible");
+} else {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    }
+  }, { threshold: 0.14, rootMargin: "0px 0px -8%" });
+  for (const item of revealItems) revealObserver.observe(item);
+}
+
 const week = {
   monday: {
     label: "Monday · Listen",
@@ -8,7 +42,7 @@ const week = {
   tuesday: {
     label: "Tuesday · Hook",
     purpose: "Lead with the moment that makes someone stop.",
-    format: "A 10–20 second vertical clip with the result first, then a glimpse of the process.",
+    format: "A 10 to 20 second vertical clip with the result first, then a glimpse of the process.",
     cta: "Invite people to listen for one specific detail."
   },
   wednesday: {

@@ -36,4 +36,3 @@ video thumbnail, a seven-block paper planner, headphones, audio interface, and
 one hand moving a note toward the plan. Use crisp daylight, white surfaces,
 deep cobalt details, and a marker-orange accent. No readable text, logos,
 watermarks, fake platform branding, crypto imagery, or startup-dashboard style.
-
