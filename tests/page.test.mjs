@@ -9,6 +9,13 @@ const indexExists = existsSync(indexPath);
 const html = indexExists ? readFileSync(indexPath, "utf8") : "";
 const cssPath = join(root, "styles.css");
 const css = existsSync(cssPath) ? readFileSync(cssPath, "utf8") : "";
+const boundKeywords = [
+  "content plan for musicians",
+  "how to turn one rehearsal into a week of content",
+  "rehearsal content ideas",
+  "content repurposing for musicians",
+  "one week social media plan for musicians",
+];
 
 function textContent(markup) {
   return markup
@@ -22,6 +29,30 @@ function textContent(markup) {
 
 function wordCount(markup) {
   return textContent(markup).match(/\b[\p{L}\p{N}][\p{L}\p{N}’'-]*\b/gu)?.length ?? 0;
+}
+
+function extractCssBlock(source, marker) {
+  const markerIndex = source.search(marker);
+  if (markerIndex < 0) return "";
+
+  const openingBrace = source.indexOf("{", markerIndex);
+  if (openingBrace < 0) return "";
+
+  let depth = 0;
+  for (let index = openingBrace; index < source.length; index += 1) {
+    if (source[index] === "{") depth += 1;
+    if (source[index] === "}") depth -= 1;
+    if (depth === 0) return source.slice(openingBrace + 1, index);
+  }
+
+  return "";
+}
+
+function cssRules(block) {
+  return [...block.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selectors, declarations]) => ({
+    selectors: selectors.trim(),
+    declarations,
+  }));
 }
 
 test("provides the public landing-page entry point", () => {
@@ -77,13 +108,7 @@ test("uses the approved homepage navigation and hero copy", () => {
 });
 
 test("places the five bound SEO phrases in the homepage", () => {
-  for (const phrase of [
-    "content plan for musicians",
-    "how to turn one rehearsal into a week of content",
-    "rehearsal content ideas",
-    "content repurposing for musicians",
-    "one week social media plan for musicians",
-  ]) {
+  for (const phrase of boundKeywords) {
     assert.match(textContent(html), new RegExp(phrase, "i"), `missing bound phrase: ${phrase}`);
   }
 });
@@ -110,11 +135,48 @@ test("includes official guidance links and complete image captions", () => {
 });
 
 test("keeps assignment evidence readable when printed", () => {
-  assert.match(css, /\.hero__caption\s*\{/i);
-  assert.match(css, /@media\s+print/i);
-  assert.match(css, /@media\s+print[\s\S]*\.hero__image\s*\{[^}]*display:\s*block/i);
-  assert.match(css, /@media\s+print[\s\S]*\.planner-cta\s*\{[^}]*display:\s*grid/i);
-  assert.match(css, /@media\s+print[\s\S]*\.js\s+\.no-js-week\s*\{[^}]*display:\s*grid\s*!important/i);
+  const printCss = extractCssBlock(css, /@media\s+print/i);
+  const printRules = cssRules(printCss);
+  const publicArticleStart = html.indexOf('<article id="top">');
+  const publicArticleEnd = html.lastIndexOf("</article>");
+  const printableArticle = html.slice(publicArticleStart, publicArticleEnd + "</article>".length);
+  const printableTitle = html.match(/<title>[\s\S]*?<\/title>/i)?.[0] ?? "";
+  const printableEvidence = `${printableTitle} ${printableArticle}`;
+
+  assert.ok(printCss.length > 0, "expected a complete @media print block");
+  assert.ok(publicArticleStart >= 0 && publicArticleEnd > publicArticleStart, "expected the public article markup");
+
+  const ruleFor = (selectorPattern, declarationPattern) => printRules.some(({ selectors, declarations }) => (
+    selectorPattern.test(selectors) && declarationPattern.test(declarations)
+  ));
+
+  assert.equal(
+    ruleFor(/(?:^|,)\s*\.track\s*(?:,|$)/i, /display:\s*none\s*!important/i),
+    true,
+    "interactive track buttons should be hidden as a group in print",
+  );
+  assert.equal(
+    ruleFor(/\.js\s+\.no-js-week/i, /display:\s*grid\s*!important/i),
+    true,
+    "the complete seven day fallback should be forced visible in print",
+  );
+  assert.equal(ruleFor(/\.hero__image/i, /display:\s*block/i), true, "the hero image should print");
+  assert.equal(ruleFor(/\.planner-cta/i, /display:\s*grid/i), true, "the planner CTA should print");
+  assert.equal(ruleFor(/a\[href\^="https:\/\/"\]/i, /text-decoration:\s*underline/i), true, "official links should remain identifiable in print");
+
+  const printableSelector = /(?:^|[,\s>+~])(?:main|article|figure|figcaption|img|h1|h2|a)(?=$|[,\s:[>+~])|\[href|\.hero(?:__image|__media|__caption)?\b|\.pillar(?:__content|__media)?\b|\.content-track(?:__intro)?\b|\.planner-cta\b|\.no-js-week\b|\.text-link\b/i;
+  const hiddenPrintableRule = printRules.find(({ selectors, declarations }) => (
+    printableSelector.test(selectors) && /display:\s*none(?:\s*!important)?/i.test(declarations)
+  ));
+  assert.equal(hiddenPrintableRule, undefined, `print CSS hides required evidence with selector: ${hiddenPrintableRule?.selectors ?? "unknown"}`);
+
+  assert.equal((printableArticle.match(/<figcaption\b/gi) || []).length, 4, "all four captions should be in the printable article");
+  assert.ok((printableArticle.match(/href="https:\/\/support\.google\.com\/[^"]+"/gi) || []).length >= 2, "both official links should be in the printable article");
+  for (const phrase of boundKeywords) assert.match(textContent(printableEvidence), new RegExp(phrase, "i"), `print source is missing keyword: ${phrase}`);
+  assert.equal((printableArticle.match(/data-fallback-day=/gi) || []).length, 7, "all seven fallback days should be in the printable article");
+
+  const interactiveTrack = printableArticle.match(/<div\b[^>]*class="track"[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? "";
+  assert.equal((interactiveTrack.match(/<button\b/gi) || []).length, 7, "expected seven interactive day buttons before print CSS hides them");
 });
 
 test("provides three whole-card category anchors", () => {
@@ -140,7 +202,9 @@ test("shows three safe social destinations", () => {
 test("keeps public copy free of long dash characters", () => {
   assert.doesNotMatch(textContent(html), /[\u2013\u2014]/u);
   assert.doesNotMatch(textContent(planner), /[\u2013\u2014]/u);
+  assert.doesNotMatch(css, /[\u2013\u2014]/u);
   assert.doesNotMatch(html + planner, /&(?:mdash|ndash);|&#(?:8211|8212|x2013|x2014);/i);
+  assert.doesNotMatch(css, /&(?:mdash|ndash);|&#(?:8211|8212|x2013|x2014);/i);
 });
 
 test("contains valid closing spans and no mojibake in public assets", () => {
