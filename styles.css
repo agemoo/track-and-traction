@@ -1105,6 +1105,7 @@
       print-color-adjust: exact;
     }
 
+    .skip-link,
     .site-header,
     .track,
     .track-detail,
@@ -1128,6 +1129,10 @@
 
     .hero h1 {
       font-size: 32pt;
+    }
+
+    .hero__deck {
+      color: var(--color-ink);
     }
 
     .hero__media {
@@ -1164,6 +1169,10 @@
     .pillar__media,
     .takeaway,
     .planner-cta {
+      break-inside: avoid;
+    }
+
+    .method-list li {
       break-inside: avoid;
     }
 
