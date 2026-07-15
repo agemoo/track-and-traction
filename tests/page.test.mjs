@@ -72,8 +72,49 @@ test("uses the approved homepage navigation and hero copy", () => {
   assert.match(navigation, /href="#content-ideas"[^>]*>Content ideas</i);
   assert.match(navigation, /href="#about"[^>]*>About</i);
   assert.match(navigation, /href="planner\.html"[^>]*>Open the free planner</i);
-  assert.match(html, /Make music\.[\s\S]*Plan the week\./i);
+  assert.match(html, /<h1>Turn one rehearsal into a week of content\.<\/h1>/i);
   assert.match(html, /Build my content week/i);
+});
+
+test("places the five bound SEO phrases in the homepage", () => {
+  for (const phrase of [
+    "content plan for musicians",
+    "how to turn one rehearsal into a week of content",
+    "rehearsal content ideas",
+    "content repurposing for musicians",
+    "one week social media plan for musicians",
+  ]) {
+    assert.match(textContent(html), new RegExp(phrase, "i"), `missing bound phrase: ${phrase}`);
+  }
+});
+
+test("uses keyword focused metadata and headings", () => {
+  assert.match(html, /<title>Content Plan for Musicians: One Rehearsal, One Week \| Track &amp; Traction<\/title>/i);
+  assert.match(
+    html,
+    /<meta\s+name="description"\s+content="Build a practical content plan for musicians\. Learn how to turn one rehearsal into a week of content with a free social media planner\."\s*>/i,
+  );
+  assert.match(html, /<h1>Turn one rehearsal into a week of content\.<\/h1>/i);
+  assert.match(html, /<h2[^>]*>[^<]*rehearsal content ideas[^<]*<\/h2>/i);
+  assert.match(html, /<h2[^>]*>[^<]*content repurposing for musicians[^<]*<\/h2>/i);
+  assert.match(html, /<h2[^>]*>[^<]*one week social media plan for musicians[^<]*<\/h2>/i);
+});
+
+test("includes official guidance links and complete image captions", () => {
+  const officialLinks = html.match(/href="https:\/\/support\.google\.com\/[^"]+"/gi) || [];
+  assert.ok(officialLinks.length >= 2, "expected at least two official support.google.com links");
+  assert.match(html, /href="https:\/\/support\.google\.com\/youtube\/answer\/12921536"[^>]*>YouTube Short<\/a>/i);
+  assert.match(html, /href="https:\/\/support\.google\.com\/analytics\/answer\/10917952\?hl=en"[^>]*>tagged links<\/a>/i);
+  assert.equal((html.match(/<figcaption\b/gi) || []).length, 4);
+  assert.match(html, /<figcaption class="hero__caption">One rehearsal can provide the raw material for a full week of content\.<\/figcaption>/i);
+});
+
+test("keeps assignment evidence readable when printed", () => {
+  assert.match(css, /\.hero__caption\s*\{/i);
+  assert.match(css, /@media\s+print/i);
+  assert.match(css, /@media\s+print[\s\S]*\.hero__image\s*\{[^}]*display:\s*block/i);
+  assert.match(css, /@media\s+print[\s\S]*\.planner-cta\s*\{[^}]*display:\s*grid/i);
+  assert.match(css, /@media\s+print[\s\S]*\.js\s+\.no-js-week\s*\{[^}]*display:\s*grid\s*!important/i);
 });
 
 test("provides three whole-card category anchors", () => {
