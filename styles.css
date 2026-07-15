@@ -1146,6 +1146,7 @@
       position: static;
       width: 100%;
       height: auto;
+      animation: none !important;
     }
 
     .hero__caption {
@@ -1159,6 +1160,12 @@
     [data-reveal] {
       transform: none !important;
       opacity: 1 !important;
+    }
+
+    .hero__copy > * {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
     }
 
     .article-shell {

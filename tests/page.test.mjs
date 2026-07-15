@@ -166,6 +166,14 @@ test("keeps assignment evidence readable when printed", () => {
   assert.equal(ruleFor(/\.skip-link/i, /display:\s*none\s*!important/i), true, "the skip link should not print");
   assert.equal(ruleFor(/\.hero__deck/i, /color:\s*var\(--color-ink\)/i), true, "the hero deck should use readable print color");
   assert.equal(ruleFor(/\.method-list\s+li/i, /break-inside:\s*avoid/i), true, "each method step should stay together in print");
+  assert.equal(
+    ruleFor(/\.hero__copy\s*>\s*\*/i, /animation:\s*none\s*!important/i)
+      && ruleFor(/\.hero__copy\s*>\s*\*/i, /opacity:\s*1\s*!important/i)
+      && ruleFor(/\.hero__copy\s*>\s*\*/i, /transform:\s*none\s*!important/i),
+    true,
+    "hero copy should not be captured mid-animation in print",
+  );
+  assert.equal(ruleFor(/\.hero__image/i, /animation:\s*none(?:\s*!important)?/i), true, "the hero image animation should be disabled in print");
 
   const printableSelector = /(?:^|[,\s>+~])(?:main|article|figure|figcaption|img|h1|h2|a)(?=$|[,\s:[>+~])|\[href|\.hero(?:__image|__media|__caption)?\b|\.pillar(?:__content|__media)?\b|\.content-track(?:__intro)?\b|\.planner-cta\b|\.no-js-week\b|\.text-link\b/i;
   const hiddenPrintableRule = printRules.find(({ selectors, declarations }) => (
