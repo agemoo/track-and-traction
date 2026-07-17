@@ -107,6 +107,17 @@ test("uses the approved homepage navigation and hero copy", () => {
   assert.match(html, /Build my content week/i);
 });
 
+test("keeps the first viewport focused on the core message", () => {
+  const hero = html.match(/<header\b[^>]*class="hero"[^>]*>([\s\S]*?)<\/header>/i)?.[1] ?? "";
+  const categories = html.match(/<section\b[^>]*class="category-section"[^>]*>([\s\S]*?)<\/section>/i)?.[1] ?? "";
+
+  assert.doesNotMatch(hero, /hero__kicker|class="waveform"/i);
+  assert.match(css, /\.hero__caption\s*\{\s*display:\s*none;/i);
+  assert.doesNotMatch(categories, /section-tag|category-card__label/i);
+  assert.match(hero, /<h1>Turn one rehearsal into a week of content\.<\/h1>/i);
+  assert.match(hero, /class="button button--primary"/i);
+});
+
 test("places the five bound SEO phrases in the homepage", () => {
   for (const phrase of boundKeywords) {
     assert.match(textContent(html), new RegExp(phrase, "i"), `missing bound phrase: ${phrase}`);
@@ -192,9 +203,9 @@ test("keeps assignment evidence readable when printed", () => {
 
 test("provides three whole-card category anchors", () => {
   const categories = html.match(/<section\b[^>]*id="content-ideas"[^>]*>([\s\S]*?)<\/section>/i)?.[1] ?? "";
-  for (const [href, label, title] of [["#music-making", "Session notes", "Music making"], ["#rehearsal-performance", "Stage notes", "Rehearsal and performance"], ["#artist-promotion", "Traction notes", "Artist promotion"]]) {
+  for (const [href, title] of [["#music-making", "Music making"], ["#rehearsal-performance", "Rehearsal and performance"], ["#artist-promotion", "Artist promotion"]]) {
     const card = categories.match(new RegExp(`<a\\b[^>]*href="${href}"[^>]*>([\\s\\S]*?)<\\/a>`, "i"))?.[1] ?? "";
-    assert.match(card, new RegExp(label, "i")); assert.match(card, new RegExp(title, "i"));
+    assert.match(card, new RegExp(title, "i"));
   }
 });
 
