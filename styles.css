@@ -1309,4 +1309,84 @@
     }
   }
   }
+
+
+/* Blog article page (blog/promote-music-without-becoming-a-content-creator.html) */
+.blog-hero {
+  padding: clamp(3.5rem, 8vw, 6.5rem) var(--gutter) 0;
+}
+
+.blog-hero__copy {
+  max-width: 62rem;
+  margin-inline: auto;
+  animation: hero-copy-enter 650ms var(--ease-out) both;
+}
+
+.blog-hero h1 {
+  max-width: 22ch;
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  line-height: 1;
+}
+
+.blog-hero__deck {
+  max-width: 44rem;
+  margin-top: 1.5rem;
+  font-size: clamp(1.1rem, 1.7vw, 1.3rem);
+  line-height: 1.55;
+}
+
+.blog-hero__meta {
+  margin-top: 1.25rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.blog-hero__media {
+  max-width: 72rem;
+  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+  animation: hero-media-enter 800ms 80ms var(--ease-out) both;
+}
+
+.blog-hero__media img {
+  width: 100%;
+  aspect-ratio: 21 / 10;
+  border-radius: 0.75rem;
+  object-fit: cover;
+}
+
+.blog-hero__media figcaption {
+  margin-top: 0.8rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.blog-lede {
+  margin-inline: auto;
+  padding-block: clamp(3rem, 6vw, 5rem) clamp(1rem, 2vw, 2rem);
+}
+
+.blog-plain {
+  max-width: var(--prose);
+  margin-inline: auto;
+  padding-block: clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid var(--color-line);
+}
+
+.blog-plain h2 {
+  margin-bottom: 2rem;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+}
+
+@media (max-width: 40rem) {
+  .blog-hero {
+    padding-top: 3rem;
+  }
+
+  .blog-hero h1 {
+    font-size: clamp(2.25rem, 9vw, 3rem);
+  }
+
+  .blog-hero__media img {
+    aspect-ratio: 4 / 3;
+  }
 }
